@@ -7,7 +7,7 @@ gini-debade
 
 ### debade-master
 * 将message发送给rabbitMQ，没有必要作为驻留服务存在，在需要的时候代码内发送message到rabbitMQ
-* 调用方式：\Gini\Debade\Publisher::send(‘CHANNEL’, ‘event name’[, ‘event data/message’]);
+* 调用方式：\Gini\Debade\Master::send(‘CHANNEL’, ‘event name’[, ‘event data/message’]);
 * 配置文件：debade.yml
         
         ---

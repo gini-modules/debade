@@ -1,0 +1,13 @@
+{
+    "id": "debade",
+    "name": "Debade",
+    "description": "Message Queue Manager",
+    "version": "0.1.0",
+    "dependencies": [
+    ],
+    "composer": {
+        "require": {
+            "videlalvaro/php-amqplib": ">=2.1.0"
+        }
+    }
+}
