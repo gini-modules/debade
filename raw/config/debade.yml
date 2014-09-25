@@ -7,12 +7,3 @@ master:
             port: 5672
             user: USER
             password: PASSWORD
-agent:
-    default: rabbitMQ
-    rabbitMQ:
-        driver: RabbitMQ
-        options:
-            server: SERVER URL
-            port: 5672
-            user: USER
-            password: PASSWORD
