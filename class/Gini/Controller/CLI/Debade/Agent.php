@@ -11,12 +11,34 @@ namespace Gini\Controller\CLI\Debade;
 
 class Agent extends \Gini\Controller\CLI\Debade
 {
+
+    private static function _post($data, $server) {
+
+        $timeout = 5;
+
+        $ch = curl_init($server);
+
+        $data = http_build_query($data);
+
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $data = curl_exec($ch);
+        $errno = curl_errno($ch);
+        curl_close($ch);
+        if ($errno) {
+            return curl_error($ch);
+        }
+
+    }
+
     public function __index($params)
     {
         $this->actionHelp($params);
     }
 
-    public function actionRegister($params)
+    private function _action($params, $type)
     {
         $prompt = [];
         if (!isset($params[0])) {
@@ -27,15 +49,26 @@ class Agent extends \Gini\Controller\CLI\Debade
             ];
         }
         $prompt = array_merge($prompt, [
-            'callback'=> [
-                'title'=> 'Callback Info',
-                'example'=> '{}'
-            ],
             'server'=> [
-                'title'=> 'Server Name'
+                'title'=> 'Server Name',
+                'example'=> 'http://172.17.42.1:8877/'
             ],
-            'token'=> [
-                'title'=> 'Token'
+            'callback.type'=> [
+                'title'=> 'Callback Type',
+                'example'=> 'http-jsonrpc OR rest',
+                'default'=> 'http-jsonrpc'
+            ],
+            'callback.host'=> [
+                'title'=> 'Callback Host',
+                'example'=> 'gapper.in'
+            ],
+            'callback.port'=> [
+                'title'=> 'Callback Port',
+                'default'=> '80'
+            ],
+            'callback.token'=> [
+                'title'=> 'Callback Token',
+                'example'=> 'RanDom',
             ]
         ]);
         $data = $this->getData($prompt);
@@ -44,10 +77,37 @@ class Agent extends \Gini\Controller\CLI\Debade
                 return $this->showError('Error: Please input info for <' . $v['title'] . '>');
             }
         }
+
         $server = $data['server'];
-        $channel = $data['channel'];
-        $token = $data['token'];
-        $callback = $data['callback'];
+        $postData = [
+            'channel'=> $params[0] ?: $data['channel'],
+            'callback'=> $data['callback.type'] . ':' . json_encode([
+                'host'=> $data['callback.host'],
+                'port'=> $data['callback.port'],
+                'token'=> $data['callback.token']
+            ])
+        ];
+
+        $confirm = readline("Continue? (Y/n):");
+
+        if ($confirm!=='Y') {
+            exit(0);
+        }
+
+        return self::_post($postData, rtrim($server, '/') . '/' . $type);
+
+    }
+
+    public function actionRegister($params)
+    {
+        $result = $this->_action($params, 'register');
+        return $result ? $this->showError($result) : $this->show('Register Done!');
+    }
+
+    public function actionUnregister($params)
+    {
+        $result = $this->_action($params, 'unregister');
+        return $result ? $this->showError($result) : $this->show('UnRegister Done!');
     }
 
     public function actionHelp($params)
