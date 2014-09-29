@@ -22,7 +22,7 @@ gini-debade
         ...
 
 ### debade-agent
-* gini debade-agent register
-* gini debase-agent unregister
-* gini debade-agent list 
+* gini debade agent register
+* gini debase agent unregister
+* gini debade agent list 
 
