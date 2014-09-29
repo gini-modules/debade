@@ -22,7 +22,7 @@ gini-debade
         ...
 
 ### debade-agent
-* gini debade-agent register CHANNEL -e ‘event name’ -c ‘JSONRPC/REST配置信息’ -s ’server ip/domain’ -t ‘token’
-* gini debase-agent unregister CHANNEL -e ‘event name’ -c ‘JSONRPC/REST配置信息’ -s ’server ip/domain’ -t ‘token’
-* gini debade-agent list <CHANNEL> -s ’server ip/domain’ -t ‘token’ 
+* gini debade-agent register
+* gini debase-agent unregister
+* gini debade-agent list 
 

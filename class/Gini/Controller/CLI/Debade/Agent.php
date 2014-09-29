@@ -110,6 +110,10 @@ class Agent extends \Gini\Controller\CLI\Debade
         return $result ? $this->showError($result) : $this->show('UnRegister Done!');
     }
 
+    public function actionList()
+    {
+    }
+
     public function actionHelp($params)
     {
         $this->show('gini debade agent register');
