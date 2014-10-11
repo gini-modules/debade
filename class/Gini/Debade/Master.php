@@ -26,9 +26,25 @@ class Master
         return self::$_driver;
     }
 
-    public static function send($channel, $event_name, $message=null)
-    {
+    public static function sendImmediately($channel, $message) {
         $driver = self::_getDriver();
-        return $driver->send($channel, $event_name, $message);
+        return $driver->send($channel, $message);
+    }
+
+    public static function send($channel, $event_name, $message=null, $type='message')
+    {
+        $message = json_encode([
+            'channel'=> $channel,
+            'type'=> $type,
+            'content'=> [
+                'event'=> $event_name,
+                'data'=> $message,
+                'time'=> microtime()
+            ]
+        ]);
+
+        $redis_channel = \Gini\Config::get('debade.redis_channel') ?: 'my-redis-channel-for-message-async-send';
+
+        \Gini\Cache::of('redis')->publish($redis_channel, $message);
     }
 }

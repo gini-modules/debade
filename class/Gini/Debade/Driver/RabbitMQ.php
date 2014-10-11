@@ -36,14 +36,8 @@ class RabbitMQ extends \Gini\Debade\Driver
         }
     }
 
-    public function send($channel, $event_name, $message)
+    public function send($channel, $message)
     {
-        $data = [
-            'event'=> $event_name,
-            'data'=> $message,
-            'time'=> microtime()
-        ];
-
         try {
             // 如果能成功创建一个错误参数的exchange，表示尚无客户端想要监听该消息
             self::$_channel->exchange_declare($channel, 'topic', false, false, true);
@@ -56,7 +50,7 @@ class RabbitMQ extends \Gini\Debade\Driver
         }
 
         self::$_channel->exchange_declare($channel, 'fanout', false, false, true);
-        $msg = new AMQPMessage(json_encode($data));
+        $msg = new AMQPMessage($message);
         self::$_channel->basic_publish($msg, $channel);
     }
 }
