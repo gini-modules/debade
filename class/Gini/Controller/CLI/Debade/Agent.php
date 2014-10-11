@@ -90,7 +90,7 @@ class Agent extends \Gini\Controller\CLI\Debade
 
         $confirm = readline("Continue? (Y/n):");
 
-        if ($confirm!=='Y') {
+        if ($confirm==='n') {
             exit(0);
         }
 

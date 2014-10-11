@@ -44,7 +44,18 @@ class RabbitMQ extends \Gini\Debade\Driver
             'time'=> microtime()
         ];
 
-        self::$_channel->exchange_declare($channel, 'fanout', false, false, false);
+        try {
+            // 如果能成功创建一个错误参数的exchange，表示尚无客户端想要监听该消息
+            self::$_channel->exchange_declare($channel, 'topic', false, false, true);
+            self::$_channel->exchange_delete($channel);
+            return;
+        }
+        catch (\Exception $e) {
+            self::$_channel->close();
+            self::$_channel = self::$_connection->channel();
+        }
+
+        self::$_channel->exchange_declare($channel, 'fanout', false, false, true);
         $msg = new AMQPMessage(json_encode($data));
         self::$_channel->basic_publish($msg, $channel);
     }
