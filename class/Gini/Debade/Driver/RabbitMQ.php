@@ -19,6 +19,7 @@ class RabbitMQ extends \Gini\Debade\Driver
         if (!self::$_connection) {
             self::$_connection = new AMQPConnection($server, $port, $user, $password);
         }
+
         if (self::$_connection && !self::$_channel) {
             self::$_channel = self::$_connection->channel();
         }
@@ -38,6 +39,7 @@ class RabbitMQ extends \Gini\Debade\Driver
 
     public function send($channel, $message)
     {
+
         try {
             // 如果能成功创建一个错误参数的exchange，表示尚无客户端想要监听该消息
             self::$_channel->exchange_declare($channel, 'topic', false, false, true);

@@ -26,7 +26,8 @@ class Master
         return self::$_driver;
     }
 
-    public static function sendImmediately($channel, $message) {
+    public static function sendImmediately($channel, $message) 
+    {
         $driver = self::_getDriver();
         return $driver->send($channel, $message);
     }
@@ -43,8 +44,18 @@ class Master
             ]
         ]);
 
-        $redis_channel = \Gini\Config::get('debade.redis_channel') ?: 'my-redis-channel-for-message-async-send';
+        $config = (array)\Gini\Config::get('debade.redis');
+        $redis_channel = $config['channel'] ?: 'my-redis-channel-for-message-async-send';
+        $redis_host = $config['host'] ?: '127.0.0.1';
+        $redis_port = $config['port'] ?: 6379;
+        $redis_password = $config['password'];
 
-        \Gini\Cache::of('redis')->publish($redis_channel, $message);
+        $redis = new \Redis();
+        $redis->connect($redis_host, $redis_port);
+        if (!empty($redis_password)) {
+            $redis->auth($redis_password);
+        }
+
+        $redis->publish($redis_channel, $message);
     }
 }

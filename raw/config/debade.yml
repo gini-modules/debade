@@ -1,3 +1,4 @@
+---
 master:
     default: rabbitMQ
     rabbitMQ:
@@ -7,3 +8,4 @@ master:
             port: 5672
             user: USER
             password: PASSWORD
+...
