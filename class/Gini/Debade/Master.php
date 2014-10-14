@@ -32,13 +32,12 @@ class Master
         return $driver->send($channel, $message);
     }
 
-    public static function send($channel, $event_name, $message=null, $type='message')
+    public static function send($channel, $message=null, $type='message')
     {
         $message = json_encode([
             'channel'=> $channel,
             'type'=> $type,
             'content'=> [
-                'event'=> $event_name,
                 'data'=> $message,
                 'time'=> microtime()
             ]
