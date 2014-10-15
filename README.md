@@ -12,15 +12,6 @@ gini-debade
     
     ```yml
     ---
-    master:
-        default: rabbitMQ
-        rabbitMQ:
-            driver: RabbitMQ
-            options:
-                server: 127.0.0.1
-                port: 5672
-                user: guest
-                password: guest
     redis:
         channel: Redis-Channel-for-Async-Message-Send
         host: 127.0.0.1
