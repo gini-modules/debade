@@ -1,11 +1,6 @@
 ---
-master:
-    default: rabbitMQ
-    rabbitMQ:
-        driver: RabbitMQ
-        options:
-            server: SERVER URL
-            port: 5672
-            user: USER
-            password: PASSWORD
+redis:
+    #channel: debade-master-messge-channel
+    #host: redis.gapper.com
+    #port: 6379
 ...
