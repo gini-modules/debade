@@ -22,15 +22,16 @@ class Agent extends \Gini\Controller\CLI\Debade
 
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
 
         $data = curl_exec($ch);
         $errno = curl_errno($ch);
         if ($errno) {
-            return curl_error($ch);
+            $result = curl_error($ch);
         }
         curl_close($ch);
-
+        
+        return $result;
     }
 
     public function __index($params)
