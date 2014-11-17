@@ -26,10 +26,10 @@ class Agent extends \Gini\Controller\CLI\Debade
 
         $data = curl_exec($ch);
         $errno = curl_errno($ch);
-        curl_close($ch);
         if ($errno) {
             return curl_error($ch);
         }
+        curl_close($ch);
 
     }
 
