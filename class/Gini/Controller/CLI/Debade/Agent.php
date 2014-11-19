@@ -67,6 +67,11 @@ class Agent extends \Gini\Controller\CLI\Debade
                 'title'=> 'Callback Port',
                 'default'=> '80'
             ],
+            'callback.path'=> [
+                'title'=> 'Callback Path',
+                'example'=> '/index/go/home',
+                'default'=> '/'
+            ],
             'callback.token'=> [
                 'title'=> 'Callback Token',
                 'example'=> 'RanDom',
@@ -85,6 +90,7 @@ class Agent extends \Gini\Controller\CLI\Debade
             'callback'=> $data['callback.type'] . ':' . json_encode([
                 'host'=> $data['callback.host'],
                 'port'=> $data['callback.port'],
+                'path'=> $data['callback.path'],
                 'token'=> $data['callback.token']
             ])
         ];
