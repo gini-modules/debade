@@ -22,15 +22,16 @@ class Agent extends \Gini\Controller\CLI\Debade
 
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
 
         $data = curl_exec($ch);
         $errno = curl_errno($ch);
-        curl_close($ch);
         if ($errno) {
-            return curl_error($ch);
+            $result = curl_error($ch);
         }
-
+        curl_close($ch);
+        
+        return $result;
     }
 
     public function __index($params)
@@ -66,6 +67,11 @@ class Agent extends \Gini\Controller\CLI\Debade
                 'title'=> 'Callback Port',
                 'default'=> '80'
             ],
+            'callback.path'=> [
+                'title'=> 'Callback Path',
+                'example'=> '/index/go/home',
+                'default'=> '/'
+            ],
             'callback.token'=> [
                 'title'=> 'Callback Token',
                 'example'=> 'RanDom',
@@ -84,6 +90,7 @@ class Agent extends \Gini\Controller\CLI\Debade
             'callback'=> $data['callback.type'] . ':' . json_encode([
                 'host'=> $data['callback.host'],
                 'port'=> $data['callback.port'],
+                'path'=> $data['callback.path'],
                 'token'=> $data['callback.token']
             ])
         ];
