@@ -5,6 +5,7 @@ namespace Gini\DeBaDe\Queue;
 class Courier implements Driver
 {
     private $_name;
+    private $_dsn;
     private $_sock;
     private $_queue;
 
@@ -18,12 +19,12 @@ class Courier implements Driver
     {
         try {
             $this->_name = $name;
+            $this->_dsn = $options['dsn'];
 
             $sock = new \ZMQSocket(new \ZMQContext(), \ZMQ::SOCKET_PUSH);
-            $sock->connect($options['addr']);
+            $sock->connect($this->_dsn);
 
             $this->_sock = $sock;
-
             $this->_queue = $options['queue'];
         } catch (\Exception $e) {
             // DO NOTHING
@@ -42,8 +43,9 @@ class Courier implements Driver
             'data' => $rmsg
         ];
 
-        $this->_sock->send(J($msg));
+        $this->_sock->send(J($msg), \ZMQ::MODE_DONTWAIT);
 
         $this->log('debug', 'pushing message: {message}', ['message' => J($rmsg)]);
     }
+
 }
