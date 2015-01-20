@@ -48,4 +48,13 @@ class Courier implements Driver
         $this->log('debug', 'pushing message: {message}', ['message' => J($rmsg)]);
     }
 
+    public function __destruct()
+    {
+        if ($this->_sock) {
+            // wait only 1000ms if disconnected
+            $this->_sock->setSockOpt(\ZMQ::SOCKOPT_LINGER, 1000);
+            $this->_sock->disconnect($this->_dsn);
+        }
+    }
+
 }
