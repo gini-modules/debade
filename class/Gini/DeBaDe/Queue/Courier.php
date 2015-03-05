@@ -32,7 +32,7 @@ class Courier implements Driver
         }
     }
 
-    public function push($rmsg)
+    public function push($rmsg, $routing_key = null)
     {
         if (!$this->_sock) {
             return;
@@ -40,12 +40,16 @@ class Courier implements Driver
 
         $msg = [
             'queue' => $this->_queue,
-            'data' => $rmsg
+            'data' => $rmsg,
         ];
+
+        if ($routing_key) {
+            $msg['routing'] = $routing_key;
+        }
 
         $this->_sock->send(J($msg), \ZMQ::MODE_DONTWAIT);
 
-        $this->log('debug', 'pushing message: {message}', ['message' => J($rmsg)]);
+        $this->log('debug', 'pushing message: {message}{routing}', ['message' => J($rmsg), 'routing' => $routing_key ? " R($routing_key)" : '']);
     }
 
     public function __destruct()
@@ -56,5 +60,4 @@ class Courier implements Driver
             $this->_sock->disconnect($this->_dsn);
         }
     }
-
 }

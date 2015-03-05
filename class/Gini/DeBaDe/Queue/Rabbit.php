@@ -66,7 +66,7 @@ class Rabbit implements Driver
         }
     }
 
-    public function push($rmsg)
+    public function push($rmsg, $routing_key = null)
     {
         $ch = $this->_channel;
         if (!$ch) {
@@ -75,12 +75,11 @@ class Rabbit implements Driver
 
         $msg = new AMQPMessage(J($rmsg), ['content_type' => 'text/plain']);
 
-        $this->log('debug', 'pushing message: {message}', ['message' => J($rmsg)]);
-        // $routing_key = null,
+        $this->log('debug', 'pushing message: {message}{routing}', ['message' => J($rmsg), 'routing' => $routing_key ? " R($routing_key)" : '' ]);
         // $mandatory = false,
         // $immediate = false,
         // $ticket = null
-        $ch->basic_publish($msg, $this->_exchange, null, false, false, null);
+        $ch->basic_publish($msg, $this->_exchange, $routing_key, false, false, null);
     }
 
     public function __destruct()
