@@ -7,9 +7,6 @@ class DeBaDe
     public static function diagnose()
     {
         $conf = \Gini\Config::get('debade.queues');
-        if (empty($conf)) {
-            return ['Please check your queues config in debade.yml!'];
-        }
         foreach ((array)$conf as $key=>$opts) {
             switch (strtolower($opts['driver'])) {
             case 'courier':
