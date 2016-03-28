@@ -8,7 +8,7 @@
     },
     "composer": {
         "require": {
-            "videlalvaro/php-amqplib": ">=2.1.0"
+            "php-amqplib/php-amqplib": ">=2.1.0"
         }
     }
 }
