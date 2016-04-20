@@ -16,7 +16,7 @@ class Rabbit implements Driver
     public function log($level, $message, array $context = [])
     {
         $context['@name'] = $this->_name;
-        \Gini\Logger::of('debade')->{$level}('0MQ[{@name}] '.$message, $context);
+        \Gini\Logger::of('debade')->{$level}('Rabbit[{@name}] '.$message, $context);
     }
 
     public function __construct($name, array $options = [])

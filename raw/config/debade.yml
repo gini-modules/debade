@@ -3,7 +3,7 @@ queues:
   # test:
   #   driver: Rabbit
   #   options:
-  #     host: 172.17.42.1
+  #     host: 172.17.0.1
   #     port: 5672
   #     username: genee
   #     password: 83719730
