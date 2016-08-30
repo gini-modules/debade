@@ -35,7 +35,7 @@ class Queue
         if ($this->_h instanceof Queue\Driver) {
             $this->_h->push($message, $routing_key);
         } else {
-            \Gini\Logger('debade')->debug('[{name}] pushing message to nowhere: {message}{routing}', [
+            \Gini\Logger::of('debade')->debug('[{name}] pushing message to nowhere: {message}{routing}', [
                 'name' => $this->_name, 'message' => J($message), 'routing' => " R($routing_key)" ]);
         }
 
