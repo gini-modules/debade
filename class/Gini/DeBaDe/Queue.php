@@ -41,4 +41,11 @@ class Queue
 
         return $this;
     }
+
+    public function __call($function, $args)
+    {
+        $method = [$this->_h, $function];
+        if (!is_callable($method)) return;
+        return call_user_func_array($method, $args);
+    }
 }

@@ -11,4 +11,16 @@ queues:
   #       name: router
   #     exchange:
   #       name: msgs
+  # pihizi:
+  #   driver: Courier
+  #   options:
+  #     dsn: 'tpc://172.17.0.1:3333'
+  #     queue: 'pihizi-queue' # debade/couri.yml里的servers.xxx
+  # phizz:
+  #   driver: Database
+  #   options:
+  #     dsn: mysql:dbname=${DB_PREFIX}_admin;host=${DB_HOST};port=${DB_PORT}
+  #     username: ${DB_USER}
+  #     password: ${DB_PASS}
+  #     queue: pihizi # 数据库队列存储之后，使用queue的配置[debades.queue.xxxx]发送消息，实时触发消费, 该值必须配置
 ...
