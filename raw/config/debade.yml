@@ -1,4 +1,8 @@
 ---
+database:
+  dsn: mysql:dbname=${DB_PREFIX}_admin;host=${DB_HOST};port=${DB_PORT}
+  username: ${DB_USER}
+  password: ${DB_PASS}
 queues:
   # test:
   #   driver: Rabbit
@@ -19,6 +23,7 @@ queues:
   # phizz:
   #   driver: Database
   #   options:
+  #     ## dsn,username,password可以不配置，debade默认使用debade.database的配置;
   #     dsn: mysql:dbname=${DB_PREFIX}_admin;host=${DB_HOST};port=${DB_PORT}
   #     username: ${DB_USER}
   #     password: ${DB_PASS}

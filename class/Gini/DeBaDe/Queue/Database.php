@@ -85,10 +85,11 @@ SQL;
             $this->_name = $name;
             $this->_queue = (string)$options['queue'];
             $key = "---debade-queue-database-{$name}---";
+            $defaultOPTs = \Gini\Config::get('debade.database');
             \Gini\Config::set("database.$key", [
-                'dsn'=> $options['dsn'],
-                'username'=> $options['username'],
-                'password'=> $options['password']
+                'dsn'=> $options['dsn'] ?: $defaultOPTs['dsn'],
+                'username'=> $options['username'] ?: $defaultOPTs['username'],
+                'password'=> $options['password'] ?: $defaultOPTs['password']
             ]);
             $this->_db = \Gini\Database::db($key);
         } catch (\Exception $e) {
