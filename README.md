@@ -3,9 +3,9 @@ gini-debade
 
 需要courier.yml的callback增加step=N-1的机制，才能正常使用database的driver
         $step= $_GET['step']; // 2-1: 有两个callback，这是第一个
-        $hash = $data['hash']; // 通过这个hash可以获取到data
-        $debade = $data['key']; // driver是database的debade.yml配置
-        $debade = \Gini\DeBaDe\Queue::of($data['key']);
+        $hash = $data['debade::hash']; // 通过这个hash可以获取到data
+        $debade = $data['debade::key']; // driver是database的debade.yml配置
+        $debade = \Gini\DeBaDe\Queue::of($data['debade::key']);
         if (!$debade->scribe($hash, $step)) return; // 标记，开始执行2-1的逻辑
 			$data = $debade->getData($hash);
 			error_log(J(['phizz', $data]));
