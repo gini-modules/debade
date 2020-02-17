@@ -117,8 +117,8 @@ SQL;
         }
 
         \Gini\DeBaDe\Queue::of($this->_queue)->push([
-            'key'=> $this->_name,
-            'hash'=> $hash
+            'debade::key'=> $this->_name,
+            'debade::hash'=> $hash
         ], $routing_key);
 
         $this->log('debug', 'pushing message: {message}{routing}', ['message' => J($rmsg), 'routing' => $routing_key ? " R($routing_key)" : '']);
