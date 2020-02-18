@@ -87,9 +87,9 @@ SQL;
             $key = "---debade-queue-database-{$name}---";
             $defaultOPTs = \Gini\Config::get('debade.database');
             \Gini\Config::set("database.$key", [
-                'dsn'=> $options['dsn'] ?: $defaultOPTs['dsn'],
-                'username'=> $options['username'] ?: $defaultOPTs['username'],
-                'password'=> $options['password'] ?: $defaultOPTs['password']
+                'dsn'=> $options['database-dsn'] ?: $defaultOPTs['dsn'],
+                'username'=> $options['database-username'] ?: $defaultOPTs['username'],
+                'password'=> $options['database-password'] ?: $defaultOPTs['password']
             ]);
             $this->_db = \Gini\Database::db($key);
         } catch (\Exception $e) {
