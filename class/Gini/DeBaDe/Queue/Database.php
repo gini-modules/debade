@@ -51,7 +51,7 @@ SQL;
     {
         $qhash = $this->_db->quote($hash);
         $qcallback = $this->_db->quote($callback);
-        $has = $this->_db->query("select id from _debade_queue_callback where hash={$qhash} and callback={$qcallback} and status=0");
+        $has = $this->_db->query("select ctime from _debade_queue_callback where hash={$qhash} and callback={$qcallback} and status=0");
         if ($has && $has->value()) return true;
         $query = $this->_db->query("insert into _debade_queue_callback (hash, callback) values({$qhash}, {$qcallback})");
         if ($query && $query->count()) return true;
