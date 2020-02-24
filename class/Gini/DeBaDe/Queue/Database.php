@@ -51,6 +51,8 @@ SQL;
     {
         $qhash = $this->_db->quote($hash);
         $qcallback = $this->_db->quote($callback);
+        $has = $this->_db->query("select id from _debade_queue_callback where hash={$qhash} and callback={$qcallback} and status=0");
+        if ($has && $has->value()) return true;
         $query = $this->_db->query("insert into _debade_queue_callback (hash, callback) values({$qhash}, {$qcallback})");
         if ($query && $query->count()) return true;
         return false;
@@ -95,6 +97,23 @@ SQL;
         } catch (\Exception $e) {
             // DO NOTHING
             $this->log('error', 'error: {error}', ['error' => $e->getMessage()]);
+        }
+    }
+
+    public function getNextNeedResend()
+    {
+        $start = 0;
+        $limit = 5;
+        while (true) {
+            $query = $this->_db->query("select id,hash,queue,ymlkey,TIMESTAMPDIFF(SECOND, ctime, CURRENT_TIMESTAMP) as tdiff from _debade_queue order by id limit $start,$limit");
+            if (!$query) break;
+            $rows = $query->rows();
+            if (!count($rows)) break;
+            $start += $limit;
+            foreach ($rows as $row) {
+                if ($row->tdiff <=300) break 2;
+                yield $row;
+            }
         }
     }
 
