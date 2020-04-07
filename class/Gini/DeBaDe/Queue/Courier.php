@@ -22,6 +22,11 @@ class Courier implements Driver
             $this->_dsn = $options['dsn'];
 
             $sock = new \ZMQSocket(new \ZMQContext(), \ZMQ::SOCKET_PUSH);
+            // by pihizi
+            // 升级到php7之后，debade消息发现多节点出现cli假死的状态
+            // 排查了代码，唯一可能导致问题的就是zmq的socket
+            // 增加这个配置，尝试解决问题
+            $sock->setSockOpt(\ZMQ::SOCKOPT_SNDTIMEO, 2000);
             $sock->connect($this->_dsn);
 
             $this->_sock = $sock;
