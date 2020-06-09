@@ -30,4 +30,22 @@ class DeBaDe extends \Gini\Controller\CLI
             ]);
         }
     }
+
+    public function actionDatabaseColumnUpdate()
+    {
+        $key = "---debade-queue-database--temporary---";
+        $defaultOPTs = \Gini\Config::get('debade.database');
+        \Gini\Config::set("database.$key", [
+            'dsn'=> $defaultOPTs['dsn'],
+            'username'=> $defaultOPTs['username'],
+            'password'=> $defaultOPTs['password']
+        ]);
+        $db = \Gini\Database::db($key);
+        $sql = "ALTER TABLE _debade_queue modify data MEDIUMTEXT NOT NULL DEFAULT ''";
+        if ($db->query($sql)) {
+            echo 'done.';
+        } else {
+            echo 'fail.';
+        }
+    }
 }

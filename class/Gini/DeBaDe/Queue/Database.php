@@ -12,7 +12,7 @@ const PREPARE_SQL = <<<SQL
       queue varchar(32) NOT NULL DEFAULT '',
       routing varchar(255) NOT NULL DEFAULT '',
       ctime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      data text NOT NULL DEFAULT '',
+      data MEDIUMTEXT NOT NULL DEFAULT '',
       PRIMARY KEY (id),
       UNIQUE KEY _MIDX_0 (hash)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
