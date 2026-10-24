@@ -2,7 +2,8 @@
 
 namespace Gini\DeBaDe\Queue;
 
-use PhpAmqpLib\Connection\AMQPConnection;
+// PHP 8.3: AMQPConnection removed in php-amqplib v3, use AMQPStreamConnection
+use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
 class Rabbit implements Driver
@@ -24,7 +25,7 @@ class Rabbit implements Driver
         try {
             $this->_name = $name;
 
-            $this->_connection = new AMQPConnection(
+            $this->_connection = new AMQPStreamConnection(
                 $options['host'] ?: '127.0.0.1',
                 $options['port'] ?: 5672,
                 $options['username'],
