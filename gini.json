@@ -8,7 +8,7 @@
     },
     "composer": {
         "require": {
-            "php-amqplib/php-amqplib": "^3.0"
+            "php-amqplib/php-amqplib": "^3.7"
         }
     },
     "moduleClass": "\\Gini\\Module\\debade"
